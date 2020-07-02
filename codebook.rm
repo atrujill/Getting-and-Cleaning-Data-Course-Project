@@ -1,0 +1,85 @@
+
+The run_analysis.R script satisfies the 5 steps of the Getting and Cleaning Data Course Project:
+
+    1. Merges the training and the test sets to create one data set.
+    2. Extracts only the measurements on the mean and standard deviation for each measurement. 
+    3. Uses descriptive activity names to name the activities in the data set
+    4. Appropriately labels the data set with descriptive variable names. 
+    5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
+
+ 1. Acquiring data
+1.1  Download the file
+First it checks if the data directory exists, if not it creates in order to store the downloaded files.
+Then data is downloaded from  "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",  a zip file
+
+
+1.2 Unzip file downloaded
+The zip file es unzipped into data directory ./data/UCI HAR Dataset, from working directory
+
+1.3 Know the the list of the unzipped files extracted at UCI HAR Dataset folder
+It shows how many files are extracted.
+
+
+1.4 Doing all the necessary data frames
+Split each information data from files into variables
+    • features:←The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. Source file is: features.txt : 561 rows, 2 columns
+
+    • activities_labels: is a list of activities labeled that indicates the activity performed when the  measurements were taken.  Source file is:  activity_labels.txt : 6 rows, 2 columns
+
+    • subject_test: contains the test data of 9/30 volunteer subjects being observed. Source file is: test/subject_test.txt : 2947 rows, 1 column 
+
+    • x_test : contains recorded features test data.  Source file is: test/X_test.txt : 2947 rows, 561 columns
+
+
+    • x_test : contains recorded features test data. Source file is: test/X_test.txt : 2947 rows, 561 columns
+
+    • y_test:←contains test data of activities’code labels. Source file is: test/y_test.txt : 2947 rows, 1 columns
+
+    • subject_train : contains train data of 21/30 volunteer subjects being observed. Source file is: test/subject_train.txt : 7352 rows, 1 column
+
+    • x_train: contains recorded features train data. Source file is: test/X_train.txt : 7352 rows, 561 columns
+
+    • y_train: contains train data of activities’code labels. Source file is: test/y_train.txt : 7352 rows, 1 columns
+ 
+
+2. TASK 1: Merges the training and the test sets to create one data set.
+In the first step is done using rbind() function
+
+x_train and x_test into X variable (10299 rows, 561 columns)
+y_train and y_test  into Y variable  (10299 rows, 1 column)
+subject_train and subject_test into subject (10299 rows, 1 column) 
+
+ Finally  Merged_Data (10299 rows, 563 column) is created by merging Subject, Y and X using cbind() function
+
+
+3. TASK 2: Extracts only the measurements on the mean and standard deviation for each measurement. 
+Tidy_Data (10299 rows, 88 columns) is created by subsetting Merged_Data, selecting only columns: subject, code and the measurements on the mean and standard deviation (std) for each measurement, as requested
+
+4 . TASK 3 Uses descriptive activity names to name the activities in the data set.
+Code column of the Tidy_Data is  replaced with corresponding activity taken from second column of  activities_label variable
+
+        Acc is replaced by Accelerometer
+        Gyro is replaced by Gyroscope
+        BodyBody is replaced by Body
+        Mag s replaced by Magnitude
+        All start with character f is replaced by Frequency
+        All start with character t is replaced by Time
+tBody   is replaced by  TimeBody
+-mean()  is replaced by Mean
+-std() is replaced by STD
+-freq()  is replaced by Frequency
+angle  is replaced by Angle
+gravity  is replaced by Gravity
+
+
+
+5. TASK 4 From the data set in step 4, creates a second, independent tidy data set with the average of 
+each variable for each activity and each subject.
+
+Final_Data is created by summarizing Tidy_Data taking the means of each variable for each activity and each subject, after grouped by subject and activity.
+
+
+6. Checking
+Structure of Final_Data is checked.
