@@ -1,4 +1,8 @@
 
+library(dplyr)
+
+
+
 # 1. Adquiring data
 # 1.1  Download the file
 if(!file.exists("./data")){dir.create("./data")}
@@ -72,7 +76,7 @@ FinalData <- Tidy_Data %>%
         group_by(subject, activity) %>%
         summarise_all(funs(mean))
 
-
+write.table(FinalData, "Tidy_dataset.txt", row.name=FALSE)
 #---------------------------------------------------------------------------------------------------
 
 # 6 CHECKING  
